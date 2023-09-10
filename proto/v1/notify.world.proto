@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package antelope.notify.world.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message LogMineEvents {
+    repeated LogMineEvent items = 1;
+}
+
+message LogMineEvent {
+    // transaction
+    string trx_id = 1;
+    uint32 action_ordinal = 2;
+    google.protobuf.Timestamp timestamp = 3;
+
+    // data payload
+    string miner = 4;
+    string bounty = 5;
+    string landowner = 6;
+    uint64 land_id = 7;
+    string landowner_share = 8;
+}

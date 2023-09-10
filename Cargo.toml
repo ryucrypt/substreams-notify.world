@@ -1,0 +1,34 @@
+[package]
+name = "notify_world"
+version = "0.1.0"
+authors = [
+    "ryucrypt <>"
+]
+description = "Antelope `notify.world` actions"
+license = "MIT OR Apache-2.0"
+edition = "2021"
+publish = false
+
+[badges]
+maintenance = { status = "actively-developed" }
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+prost = "0.11"
+prost-types = "0.11"
+substreams = "0.5.10"
+substreams-database-change = "1.2.1"
+substreams-antelope = "0.3.2"
+antelope = "0.1.5"
+serde_json = "1"
+serde = { version = "1", features = ["derive"] }
+
+[build-dependencies]
+substreams-antelope = "0.3.2"
+
+[profile.release]
+lto = true
+opt-level = 's'
+strip = "debuginfo"

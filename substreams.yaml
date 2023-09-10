@@ -1,0 +1,36 @@
+specVersion: v0.1.0
+package:
+  name: notify_world
+  version: v0.1.0
+  url: https://github.com/pinax-network/substreams
+  doc: Antelope `notify.world` based action traces & database operations.
+
+imports:
+  sink_files: https://github.com/streamingfast/substreams-sink-files/releases/download/v2.0.1/substreams-sink-files-v2.0.1.spkg
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: target/wasm32-unknown-unknown/release/notify_world.wasm
+
+protobuf:
+  files:
+    - notify.world.proto
+  importPaths:
+    - ./proto/v1
+
+modules:
+  - name: map_logmines
+    kind: map
+    inputs:
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.notify.world.v1.LogMineEvents
+
+  - name: csv_out
+    kind: map
+    inputs:
+      - params: string
+      - map: map_logmines
+    output:
+      type: proto:sf.substreams.sink.files.v1.Lines
